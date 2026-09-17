@@ -13,7 +13,6 @@ pnpm create mugnavo
 - [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
 - [Better Auth](https://better-auth.com/)
 - [Vite Plus](https://viteplus.dev/) + [Nitro](https://nitro.build/)
-- [evlog](https://www.evlog.dev/)
 
 > [!TIP]
 > This template is also available as a monorepo, powered by Vite+ and pnpm workspaces. See [mugnavo/tanstarter-monorepo](https://github.com/mugnavo/tanstarter-monorepo).
