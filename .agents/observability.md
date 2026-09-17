@@ -31,7 +31,7 @@ throw createError({
 });
 ```
 
-Framework wiring lives in `nitro.config.ts` and `src/routes/__root.tsx`. Keep `experimental.asyncContext` enabled because the local `useLogger()` adapter depends on Nitro's request context.
+Framework wiring lives in `nitro.config.ts` and `src/routes/__root.tsx`.
 
 ## Standalone server work
 
