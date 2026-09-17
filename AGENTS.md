@@ -25,6 +25,7 @@
 - [Data flow](.agents/data-flow.md) - TanStack Start/Router + Query data loading, cache behavior, mutations, and server boundaries
 - [Auth patterns](.agents/auth.md) - Route guards, middleware, auth utilities
 - [Database conventions](.agents/database.md) - Drizzle column types and generated Better Auth schema ownership
+- [Observability](.agents/observability.md) - evlog request context, structured errors, and safe event logging for server-side features
 - [Testing](.agents/testing.md) - What to test, Vitest/Playwright boundaries, commands
 - [TypeScript conventions](.agents/typescript.md) - Casting rules, prefer type inference
 - [Workflow](.agents/workflow.md) - Workflow commands, validation approach

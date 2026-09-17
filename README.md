@@ -13,6 +13,7 @@ pnpm create mugnavo
 - [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
 - [Better Auth](https://better-auth.com/)
 - [Vite Plus](https://viteplus.dev/) + [Nitro](https://nitro.build/)
+- [evlog](https://www.evlog.dev/)
 
 > [!TIP]
 > This template is also available as a monorepo, powered by Vite+ and pnpm workspaces. See [mugnavo/tanstarter-monorepo](https://github.com/mugnavo/tanstarter-monorepo).
@@ -61,6 +62,10 @@ pnpm create mugnavo
 [Varlock](https://varlock.dev/) keeps the environment-variable contract in `.env.schema` and generates types from it. Put local values, including secrets, in the uncommitted `.env.local`, then run `vpr env:load` to validate them.
 
 In application code, `import { ENV } from "varlock/env"` instead of reading `process.env` directly.
+
+## Logging
+
+[evlog](https://www.evlog.dev/) is wired into the app through Nitro and emits one structured event per request. Add a [drain](https://www.evlog.dev/integrate/adapters/overview) when production needs logs sent to your chosen provider.
 
 ## Deploying to production
 
