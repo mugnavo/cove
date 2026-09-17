@@ -62,6 +62,10 @@ pnpm create mugnavo
 
 In application code, `import { ENV } from "varlock/env"` instead of reading `process.env` directly.
 
+## Logging
+
+[evlog](https://www.evlog.dev/) is wired into the app through Nitro and emits one structured event per request. Add a [drain](https://www.evlog.dev/integrate/adapters/overview) when production needs logs sent to your chosen provider.
+
 ## Deploying to production
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/66acdee6-8e42-436f-9943-a67cad998f63/deploy-status)](https://app.netlify.com/projects/mugnavo-tanstarter/deploys)
