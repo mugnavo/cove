@@ -1,17 +1,31 @@
 ---
 name: sync-template
-description: Update a project derived from mugnavo/tanstarter with upstream starter changes while preserving application features, content, configuration, and deployment behavior. Use when asked to sync with TanStarter, update the starter foundation, or review upstream changes. Supports forks with shared Git history and projects created through GitHub templates or the starter CLI.
+description: Compare or sync projects with upstream changes from the Cove Stack template while preserving project-specific behavior and configuration. Use for Cove Stack upgrades, starter syncs, or upstream-change reviews.
 ---
 
-# Sync a project with TanStarter
+# Sync a project with Cove Stack
 
-Integrate relevant changes from https://github.com/mugnavo/tanstarter while preserving the project's own behavior.
+Integrate relevant changes from the project's Cove Stack template while preserving the project's own behavior.
 
 For a comparison-only request, inspect and report without applying changes. For a sync request, prepare and validate a reviewable update. Follow existing user authorization for commits, pushes, pull requests, and deployment.
 
 ## Establish the project state
 
-- Confirm the destination repository and its TanStarter provenance.
+- Confirm the destination repository and its Cove Stack provenance.
+- Read `.cove.jsonc` when present. It may contain:
+
+  ```jsonc
+  {
+    // Used by the sync-template skill to track this project's
+    // Cove Stack source and applied template revision.
+    "source": "https://github.com/mugnavo/cove",
+    "revision": "<exact upstream commit>",
+    "createdAt": "<ISO 8601 creation time>",
+    "lastSyncedAt": "<ISO 8601 successful sync time>"
+  }
+  ```
+
+  `source` identifies the template repository. `revision` is initially the downloaded commit and later the newest upstream commit fully reconciled with the project. `createdAt` is immutable and may be absent. `lastSyncedAt` is absent until the first completed sync.
 - Read its current `AGENTS.md`, relevant project guidance, package scripts, environment schema, and previous sync records.
 - Record the starting commit (`PROJECT_START`), branch, staged and unstaged changes, and untracked files.
 - Use a dedicated sync branch following the repository's naming conventions.
@@ -22,15 +36,22 @@ For a comparison-only request, inspect and report without applying changes. For 
 
 ## Resolve the upstream target
 
+Resolve `TEMPLATE_SOURCE` from an explicit user choice, `.cove.jsonc`, previous sync records, or reliable generation and history evidence. Supported Cove Stack sources are:
+
+- `https://github.com/mugnavo/cove`
+- `https://github.com/mugnavo/cove-monorepo`
+
+Workspace structure is supporting evidence, not proof of provenance. Ask rather than guess when the source remains ambiguous. Do not rewrite a recorded source unless correcting it is part of the requested work and the evidence is clear.
+
 Discover the canonical repository's default branch:
 
 ```sh
-git ls-remote --symref https://github.com/mugnavo/tanstarter.git HEAD
+git ls-remote --symref "$TEMPLATE_SOURCE" HEAD
 ```
 
 An explicitly requested upstream branch, tag, or commit takes precedence.
 
-Verify a remote's URL before using it. Do not assume a remote named `upstream` points to TanStarter, and do not repoint an existing remote or the project's `origin`.
+Verify a remote's URL before using it. Do not assume a remote named `upstream` points to `TEMPLATE_SOURCE`, and do not repoint an existing remote or the project's `origin`.
 
 Fetch the verified ref and immediately resolve its immutable commit as `TARGET`. Record the source URL, ref, SHA, and fetch date. If using `FETCH_HEAD`, resolve it before another fetch replaces it.
 
@@ -38,16 +59,16 @@ If remote verification is unavailable, identify any inspected local revision as 
 
 ## Establish the comparison base
 
-Projects created from a GitHub template or starter CLI may not share Git history with TanStarter. Check the actual history rather than assuming the project is a fork.
+Projects created from a GitHub template or starter CLI may not share Git history with Cove Stack. Check the actual history rather than assuming the project is a fork.
 
 Look for:
 
 - A real Git merge base.
-- A previously recorded upstream revision.
+- A previously recorded upstream revision, including `.cove.jsonc`'s `revision`.
 - Generation metadata or an identifiable initial starter snapshot.
 - Earlier sync commits and records of intentionally omitted changes.
 
-Check for shallow or incomplete history before concluding that no common ancestor exists. A similar timestamp or dependency version does not establish a reliable base.
+Before using `.cove.jsonc`'s `revision` as `BASE`, verify that it identifies a commit from `source`. Treat `createdAt` and `lastSyncedAt` only as context; timestamps and dependency versions do not establish a reliable base. Check for shallow or incomplete history before concluding that no common ancestor exists.
 
 When a verified comparison base (`BASE`) exists, inspect the upstream delta:
 
@@ -127,13 +148,13 @@ Use the destination project's current commands and testing guidance.
 
 - Install dependencies with the pinned toolchain after reviewing manifest and lifecycle changes.
 - Run lint/type checks and the narrowest relevant tests.
-- In projects retaining TanStarter's Vite+ scripts, `vpr lint` covers linting and type checking, `vpr test` runs unit tests, and `vpr test:e2e` runs browser tests. Verify the current scripts before relying on these names.
+- In projects retaining Cove Stack's Vite+ scripts, `vpr lint` covers linting and type checking, `vpr test` runs unit tests, and `vpr test:e2e` runs browser tests. Verify the current scripts before relying on these names.
 - If browser behavior changed, run the affected browser tests. When their configuration owns the production build and server lifecycle, do not run a duplicate build first.
-- Validate environment configuration without exposing values. Projects retaining Varlock can use `vp exec varlock load --agent`.
+- Validate environment configuration using the project's current tooling without exposing values.
 - Check affected routes, authentication flows, navigation, forms, metadata, and responsive behavior against the baseline.
 - Exercise supported optional-feature states when their integration changes.
 - Follow the project's test-port convention. Do not stop unrelated servers to free a port.
-- Use disposable local resources for database and integration checks. Do not submit real enquiries, send real user emails, or run production migrations as part of validation.
+- Use disposable local resources for database and integration checks. Do not trigger real external side effects or run production migrations during validation.
 - For deployment changes, inspect and verify the affected build/startup path. Entrypoints may apply migrations.
 
 Review the complete result against `PROJECT_START`, including staged, unstaged, and newly introduced files:
@@ -161,6 +182,14 @@ Update an existing sync record, or create `docs/upstream-sync.md` if none exists
 
 Keep previous entries so future syncs can reconsider omissions.
 
-A recorded target is not proof that all changes were integrated. Do not advance a “fully synchronized” marker past unresolved work or claim a completed merge before its merge commit exists.
+After every upstream change through `TARGET` has been adopted, adapted, or explicitly recorded as not applicable, and introduced regressions are resolved, update `.cove.jsonc` as part of the prepared sync:
+
+- Set `revision` to `TARGET`.
+- Set `lastSyncedAt` to the current ISO 8601 timestamp.
+- Preserve `source`, `createdAt`, unknown fields, and comments.
+
+Do not update these fields for comparison-only work, a target with deferred or unresolved changes, or a failed validation. Do not invent a missing `createdAt` or change it during a sync.
+
+A recorded target is not proof that all changes were integrated. Do not advance `revision` past unresolved work or claim a completed merge before its merge commit exists.
 
 Deliver the branch or worktree, exact upstream target, practical changes, validation results, and remaining work. A dependency-only update is not a full starter sync. A local sync request does not itself authorize publishing, production migrations, or deployment.
