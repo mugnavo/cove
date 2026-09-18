@@ -109,10 +109,10 @@ function LoginForm() {
 
 /**
  * TODO: Delete this.
- * Demo credentials for the live deployment of the TanStarter template on which this project is based.
+ * Demo credentials for the live deployment of the Cove Stack template on which this project is based.
  */
 function DeleteMeDemoAccount() {
-  if (new URL(ENV.VITE_BASE_URL).origin !== "https://tanstarter.mugnavo.com") return null;
+  if (new URL(ENV.VITE_BASE_URL).origin !== "https://cove.mugnavo.com") return null;
 
   return (
     <div className="rounded-md border border-dashed bg-muted/50 p-3 text-sm">

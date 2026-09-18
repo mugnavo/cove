@@ -23,7 +23,7 @@ export default defineConfig({
    *
    * App-level policies such as CSP, Permissions-Policy, X-Frame-Options /
    * frame-ancestors, COOP, Referrer-Policy, and X-Content-Type-Options are
-   * intentionally not configured by the TanStarter template because safe values
+   * intentionally not configured by the Cove Stack template because safe values
    * depend on the app's embedding requirements, browser APIs, integrations, and
    * content.
    */

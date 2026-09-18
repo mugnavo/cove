@@ -1,11 +1,11 @@
-# [TanStarter](https://github.com/mugnavo/tanstarter)
+# [Cove Stack](https://github.com/mugnavo/cove)
 
 <!-- scaffold:description -->
 
-A minimal starter template for 🏝️ TanStack Start. [→ Preview here](https://tanstarter.mugnavo.com/)
+A minimal starter stack for 🏝️ TanStack Start. [→ Preview here](https://cove.mugnavo.com/)
 
 ```bash
-pnpm create mugnavo
+pnpm create cove
 ```
 
 - [React](https://react.dev) + TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
@@ -15,7 +15,7 @@ pnpm create mugnavo
 - [Vite Plus](https://viteplus.dev/) + [Nitro](https://nitro.build/)
 
 > [!TIP]
-> This template is also available as a monorepo, powered by Vite+ and pnpm workspaces. See [mugnavo/tanstarter-monorepo](https://github.com/mugnavo/tanstarter-monorepo).
+> This template is also available as a monorepo, powered by Vite+ and pnpm workspaces. See [mugnavo/cove-monorepo](https://github.com/mugnavo/cove-monorepo).
 
 ## Getting Started
 
@@ -27,10 +27,10 @@ pnpm create mugnavo
 
 #### Setup
 
-1. [Use this template](https://github.com/new?template_name=tanstarter&template_owner=mugnavo) or create a project using our CLI:
+1. [Use this template](https://github.com/new?template_name=cove&template_owner=mugnavo) or create a project using our CLI:
 
    ```bash
-   pnpm create mugnavo
+   pnpm create cove
    ```
 
 2. Create a `.env.local` file with your values, based on [`.env.schema`](./.env.schema), then validate them:
@@ -68,7 +68,7 @@ In application code, `import { ENV } from "varlock/env"` instead of reading `pro
 
 ## Deploying to production
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/66acdee6-8e42-436f-9943-a67cad998f63/deploy-status)](https://app.netlify.com/projects/mugnavo-tanstarter/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/66acdee6-8e42-436f-9943-a67cad998f63/deploy-status)](https://app.netlify.com/projects/mugnavo-cove/deploys)
 
 The [vite config](./vite.config.ts) is configured to use Nitro by default, which supports many [deployment presets](https://nitro.build/deploy) like Netlify, Vercel, Node.js, and more.
 
@@ -123,5 +123,5 @@ Code in this template is public domain via [Unlicense](./LICENSE). Feel free to 
 
 ## Related templates
 
-- [mugnavo/tanstarter-monorepo](https://github.com/mugnavo/tanstarter-monorepo) - A minimal monorepo version of this template, powered by Vite+ and pnpm workspaces.
-- [tsu-moe/tsu-stack](https://github.com/tsu-moe/tsu-stack) - An opinionated and batteries-included monorepo template from Luzefiru, built on tanstarter-monorepo, with Paraglide.js (i18n), Hono, oRPC, and more.
+- [mugnavo/cove-monorepo](https://github.com/mugnavo/cove-monorepo) - A minimal monorepo version of this template, powered by Vite+ and pnpm workspaces.
+- [tsu-moe/tsu-stack](https://github.com/tsu-moe/tsu-stack) - An opinionated and batteries-included monorepo template from Luzefiru, built on cove-monorepo, with Paraglide.js (i18n), Hono, oRPC, and more.

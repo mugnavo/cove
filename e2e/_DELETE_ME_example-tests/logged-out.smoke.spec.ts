@@ -10,10 +10,10 @@ test.beforeEach(async ({ context }) => {
 test("a logged-out visitor can reach the login form", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /minimal starter template/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /minimal starter stack/i })).toBeVisible();
   await expect(page.getByText("You are not signed in.")).toBeVisible();
 
-  await page.getByText("Just created a project from this template?").click();
+  await page.getByText("Just created a project from this stack?").click();
   await expect(page.getByText(/The Playwright config needs no change/)).toBeVisible();
 
   await page.getByRole("button", { name: "Log in" }).click();

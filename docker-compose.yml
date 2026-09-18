@@ -4,11 +4,11 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_data_tanstarter:/var/lib/postgresql
+      - postgres_data_cove:/var/lib/postgresql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=tanstarter
+      - POSTGRES_DB=cove
 
 volumes:
-  postgres_data_tanstarter:
+  postgres_data_cove:

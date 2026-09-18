@@ -56,9 +56,8 @@ export function SocialSignInButtons({
   callbackURL,
   disabled,
 }: Pick<SocialLoginButtonProps, "callbackURL" | "disabled">) {
-  // TODO: Remove this. This is just for the demo deployment of TanStarter, which this project is based on.
-  const isPreviewDeployment =
-    new URL(ENV.VITE_BASE_URL).origin === "https://tanstarter.mugnavo.com";
+  // TODO: Remove this. This is just for the demo deployment of Cove Stack, which this project is based on.
+  const isPreviewDeployment = new URL(ENV.VITE_BASE_URL).origin === "https://cove.mugnavo.com";
 
   return (
     <>
