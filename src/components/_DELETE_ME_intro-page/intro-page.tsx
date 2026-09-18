@@ -21,14 +21,14 @@ import { useAuthSuspense } from "#/lib/auth/hooks.ts";
 import { formatGitHubStars } from "./format-github-stars";
 
 /**
- * This is the intro component for TanStarter, which you may delete after creating the project.
+ * This is the intro component for Cove Stack, which you may delete after creating the project.
  * Happy coding!
  */
 export function IntroPage() {
   const [isCopied, setIsCopied] = useState(false);
 
-  const repoUrl = "https://github.com/mugnavo/tanstarter";
-  const cloneCommand = "pnpm create mugnavo";
+  const repoUrl = "https://github.com/mugnavo/cove";
+  const cloneCommand = "pnpm create cove";
   const fallbackStarsCount = 1000;
 
   const copyToClipboard = async () => {
@@ -55,7 +55,7 @@ export function IntroPage() {
               className="size-5 md:size-6"
             />
             <span className="text-lg font-semibold tracking-tight text-foreground md:text-xl">
-              tanstarter
+              cove
             </span>
           </a>
           <div className="flex items-center gap-2">
@@ -65,8 +65,8 @@ export function IntroPage() {
         </div>
 
         <h1 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-          A <span className="text-yellow-500 dark:text-yellow-200">minimal</span> starter template
-          for TanStack Start.
+          A <span className="text-yellow-500 dark:text-yellow-200">minimal</span> starter stack for
+          TanStack Start.
         </h1>
 
         <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
@@ -225,7 +225,7 @@ function TemplateSetupGuide() {
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 select-none [&::-webkit-details-marker]:hidden">
         <span>
           <span className="block font-medium text-foreground">
-            Just created a project from this template?
+            Just created a project from this stack?
           </span>
           <span className="mt-1 block text-muted-foreground">
             Expand for the starter cleanup checklist.
@@ -314,7 +314,7 @@ function RepoStarsBadge({
 }
 
 async function fetchRepoStars({ signal }: { signal: AbortSignal | undefined }) {
-  const response = await fetch("https://api.github.com/repos/mugnavo/tanstarter", {
+  const response = await fetch("https://api.github.com/repos/mugnavo/cove", {
     signal,
     headers: {
       Accept: "application/vnd.github+json",
@@ -349,17 +349,17 @@ const CORE_BADGES: TechBadge[] = [
   {
     alt: "React version",
     href: "https://react.dev",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies.react&label=react&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies.react&label=react&style=flat-square",
   },
   {
     alt: "TanStack Start version",
     href: "https://tanstack.com/start/latest",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-start%22%5D&label=tanstack-start&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-start%22%5D&label=tanstack-start&style=flat-square",
   },
   {
     alt: "TanStack Query version",
     href: "https://tanstack.com/query/latest",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-query%22%5D&label=tanstack-query&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-query%22%5D&label=tanstack-query&style=flat-square",
   },
 ];
 
@@ -367,17 +367,17 @@ const UI_BADGES: TechBadge[] = [
   {
     alt: "Tailwind CSS version",
     href: "https://tailwindcss.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.devDependencies.tailwindcss&label=tailwindcss&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.devDependencies.tailwindcss&label=tailwindcss&style=flat-square",
   },
   {
     alt: "shadcn/ui version",
     href: "https://ui.shadcn.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies.shadcn&label=shadcn%2Fui&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies.shadcn&label=shadcn%2Fui&style=flat-square",
   },
   {
     alt: "Base UI version",
     href: "https://base-ui.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40base-ui%2Freact%22%5D&label=base-ui&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40base-ui%2Freact%22%5D&label=base-ui&style=flat-square",
   },
 ];
 
@@ -385,12 +385,12 @@ const DATA_BADGES: TechBadge[] = [
   {
     alt: "Drizzle ORM version",
     href: "https://orm.drizzle.team/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22drizzle-orm%22%5D&label=drizzle-orm&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22drizzle-orm%22%5D&label=drizzle-orm&style=flat-square",
   },
   {
     alt: "Better Auth version",
     href: "https://better-auth.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22better-auth%22%5D&label=better-auth&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22better-auth%22%5D&label=better-auth&style=flat-square",
   },
 ];
 
@@ -398,12 +398,12 @@ const PLATFORM_BADGES: TechBadge[] = [
   {
     alt: "Vite+ version",
     href: "https://viteplus.dev",
-    src: "https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpnpm-workspace.yaml&query=%24.catalog.vite-plus&label=vite-plus&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpnpm-workspace.yaml&query=%24.catalog.vite-plus&label=vite-plus&style=flat-square",
   },
   {
     alt: "Nitro version",
     href: "https://nitro.build/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Ftanstarter%2Fmain%2Fpackage.json&query=%24.devDependencies.nitro&label=nitro&style=flat-square",
+    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.devDependencies.nitro&label=nitro&style=flat-square",
   },
 ];
 

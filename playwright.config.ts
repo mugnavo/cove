@@ -29,7 +29,7 @@ export default defineConfig({
       // remove these entries and provide the required variables there instead.
       BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? randomBytes(32).toString("base64url"),
       DATABASE_URL:
-        process.env.DATABASE_URL ?? "postgresql://postgres:password@localhost:5432/tanstarter_e2e",
+        process.env.DATABASE_URL ?? "postgresql://postgres:password@localhost:5432/cove_e2e",
     },
     url: baseURL,
     reuseExistingServer: false,

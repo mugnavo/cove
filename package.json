@@ -1,5 +1,5 @@
 {
-  "name": "tanstarter",
+  "name": "cove",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -84,7 +84,7 @@
     "node": ">=24"
   },
   "packageManager": "pnpm@12.4.2",
-  "generator": "create-mugnavo",
+  "generator": "create-cove",
   "intent": {
     "skills": [
       "@tanstack/*"
