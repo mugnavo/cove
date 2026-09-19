@@ -4,6 +4,9 @@
 
 A minimal starter stack for 🏝️ TanStack Start. [→ Preview here](https://cove.mugnavo.com/)
 
+> [!NOTE]
+> [TanStarter is now Cove Stack.](https://github.com/mugnavo/cove/issues/96)
+
 ```bash
 pnpm create cove
 ```

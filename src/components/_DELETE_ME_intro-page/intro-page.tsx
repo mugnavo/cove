@@ -82,6 +82,15 @@ export function IntroPage() {
             />
 
             <div className="relative max-w-2xl">
+              <a
+                href="https://github.com/mugnavo/cove/issues/96"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-yellow-500/15 md:text-sm dark:border-yellow-200/20 dark:bg-yellow-200/10 dark:hover:bg-yellow-200/15"
+              >
+                TanStarter is now Cove Stack.
+                <ExternalLinkIcon aria-hidden="true" className="size-3 md:size-3.5" />
+              </a>
               <h1 className="max-w-xl text-3xl font-bold tracking-[-0.04em] text-balance sm:text-4xl md:text-5xl md:leading-[1.05]">
                 A <span className="text-yellow-500 dark:text-yellow-200">minimal</span> starter
                 stack for TanStack Start.
