@@ -55,7 +55,7 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "shadcn": "4.21.0",
-    "varlock": "1.19.0"
+    "varlock": "1.20.0"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",
@@ -67,7 +67,7 @@
     "@tanstack/react-devtools": "0.10.12",
     "@tanstack/react-query-devtools": "5.103.1",
     "@tanstack/react-router-devtools": "1.167.2",
-    "@types/node": "26.6.1",
+    "@types/node": "26.6.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.1",
@@ -83,7 +83,7 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@12.4.2",
+  "packageManager": "pnpm@12.5.1",
   "generator": "create-cove",
   "intent": {
     "skills": [
