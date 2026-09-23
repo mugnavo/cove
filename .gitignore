@@ -27,4 +27,7 @@ dist
 /server/build
 /public/build
 
+coverage
+.vitest/
+
 .tanstack
