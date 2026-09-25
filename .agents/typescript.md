@@ -1,47 +1,19 @@
-<!-- based on https://github.com/TanStack/tanstack.com/blob/main/.agents/typescript.md -->
-
 # TypeScript Conventions
 
-## Avoid Type Casting
+## Prefer Inference From the Source
 
-Never cast types unless absolutely necessary. This includes:
+Derive types from the schema or API that defines the data, such as a Drizzle schema, a validation schema, or a function return type. Keep types close to their source instead of maintaining duplicate shapes. When a type is wrong, fix the schema or function signature rather than asserting a different type at the point of use.
 
-- Manual generic type parameters (e.g., `<Type>`)
-- Type assertions using `as`
-- Type assertions using `satisfies`
+Validate data at boundaries where TypeScript cannot establish its runtime shape, such as user input and external responses. A type assertion does not validate data.
 
-## Prefer Type Inference
+## Use TypeScript's Checks Intentionally
 
-Infer types by going up the logical chain:
+- Avoid `as` when it only silences a type error. Use it when a boundary or library contract cannot express a fact already established by the code, and keep the assertion close to that evidence.
+- Use `satisfies` when a value should be checked against a contract while retaining its inferred type, especially for configuration objects.
+- Let TypeScript infer generic arguments when it can. Supply them when the type cannot be inferred from the arguments or when an API requires the caller to define it, such as a route context type.
 
-1. **Schema validation** as source of truth (e.g. Zod/Valibot, or Drizzle schema)
-2. **Type inference** from function return types, API responses
-3. **Fix at source** (schema, API definition, function signature) rather than casting at point of use
+Prefer simple types that describe the current behavior. Introduce custom generic utilities only when they solve a concrete need.
 
-```typescript
-// Bad
-const result = api.getData() as MyType;
-const value = getValue<MyType>();
+## Checking Changes
 
-// Good
-const result = api.getData(); // Type inferred from return type
-const value = getValue(); // Type inferred from implementation
-```
-
-## Generic Type Parameter Naming
-
-All generic type parameters must be prefixed with `T`.
-
-```typescript
-// Bad
-function withCapability<Args extends unknown[], R>(
-  handler: (user: AuthUser, ...args: Args) => R,
-) { ... }
-
-// Good
-function withCapability<TArgs extends unknown[], TReturn>(
-  handler: (user: AuthUser, ...args: TArgs) => TReturn,
-) { ... }
-```
-
-Common names: `T`, `TArgs`, `TReturn`, `TData`, `TError`, `TKey`, `TValue`
+Use `vpr lint` for TypeScript validation. It runs Oxlint with type-aware linting and type checking. Do not run `tsc --noEmit` separately; it is unnecessary. See [Workflow](./workflow.md) for the full validation guidance.
