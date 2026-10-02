@@ -1,5 +1,6 @@
 services:
   db:
+    env_file: .env.local
     container_name: ${SITE_NAME}
     image: postgres:alpine
     ports:
