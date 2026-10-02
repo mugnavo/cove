@@ -1,15 +1,16 @@
 services:
   db:
-    container_name: ${SITE_NAME:cove}
+    container_name: ${SITE_NAME}
     image: postgres:alpine
     ports:
       - 5432:5432
     volumes:
-      - postgres_data_${SITE_NAME:cove}:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=${SITE_NAME:cove}
+      - POSTGRES_DB=${SITE_NAME}
 
 volumes:
-  postgres_data_cove:
+  postgres_data:
+    name: postgres_${SITE_NAME}
