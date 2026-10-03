@@ -57,13 +57,19 @@ pnpm create cove
    vpr dev
    ```
 
-   The development server should now be running at [http://localhost:3000](http://localhost:3000).
+   [Portless](https://github.com/vercel-labs/portless) serves the app at [http://cove.localhost](http://cove.localhost), using the `name` in `package.json` as the hostname (example [http://cove.localhost](http://cove.localhost)). Give each project a unique package name. Git worktrees get a branch subdomain automatically; use the URL printed in the terminal.
+
+   On first run, Portless may prompt for administrator access to trust its local HTTPS certificate and bind port 443. For plain localhost development, run `PORTLESS=0 vpr dev` and open [http://localhost:3000](http://localhost:3000).
 
 ## Environment variables
 
 [Varlock](https://varlock.dev/) keeps the environment-variable contract in `.env.schema` and generates types from it. Put local values, including secrets, in the uncommitted `.env.local`, then run `vpr env:load` to validate them.
 
 In application code, `import { ENV } from "varlock/env"` instead of reading `process.env` directly.
+
+Leave `PORTLESS_URL` and `VITE_BASE_URL` unset in `.env.local` to let the browser and Better Auth follow the current development URL. Remove an existing `VITE_BASE_URL=http://localhost:3000` override when switching to Portless. Set `VITE_BASE_URL` explicitly for production.
+
+For OAuth, register `<VITE_BASE_URL>/api/auth/callback/<provider>` with the provider. Providers such as Google reject `.localhost` redirect URLs; use `PORTLESS=0 vpr dev` with a localhost callback, or configure a [custom Portless domain](https://github.com/vercel-labs/portless#multi-segment-tlds) accepted by your provider.
 
 ## Logging
 
