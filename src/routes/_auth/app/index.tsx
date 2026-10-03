@@ -16,12 +16,12 @@ function AppIndex() {
       </pre>
 
       <div>
-        User from route context:
+        Signed in as:
         <span className="mt-0.5 block font-mono text-xs">{user?.name}</span>
       </div>
 
       <div>
-        <p>The /app index page, a protected route, since it is under the _auth layout:</p>
+        <p>/app is a protected route under the _auth layout:</p>
         <pre className="mx-auto mt-0.5 block w-fit rounded-md border bg-card p-1 text-xs text-card-foreground">
           _auth/route.tsx
         </pre>
