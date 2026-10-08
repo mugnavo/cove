@@ -54,11 +54,11 @@
     "postgres": "3.4.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "shadcn": "4.21.3",
+    "shadcn": "4.21.4",
     "varlock": "1.21.1"
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.64.0",
     "@tailwindcss/vite": "4.3.3",
     "@tanstack/devtools-a11y": "0.2.2",
     "@tanstack/devtools-vite": "0.8.5",
@@ -83,7 +83,7 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@12.9.1",
+  "packageManager": "pnpm@12.10.1",
   "generator": "create-cove",
   "intent": {
     "skills": [
