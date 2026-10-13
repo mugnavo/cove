@@ -1,5 +1,5 @@
 import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
-import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
+import { getRequest, appendResponseHeader } from "@tanstack/react-start/server";
 
 import { auth } from "#/lib/auth/auth.ts";
 
@@ -35,7 +35,7 @@ export const _getUser = createServerOnlyFn(async (query?: GetUserServerQuery) =>
   // Forward any Set-Cookie headers to the client, e.g. for session/cache refresh
   const cookies = session.headers?.getSetCookie();
   if (cookies?.length) {
-    setResponseHeader("Set-Cookie", cookies);
+    appendResponseHeader("Set-Cookie", cookies);
   }
 
   return session.response?.user || null;
