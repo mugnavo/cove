@@ -7,7 +7,9 @@ ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 # `prepare` only sets up git hooks and env typings, which a build doesn't need.
-RUN pnpm install --frozen-lockfile --ignore-scripts
+# skills.dirs turns off agent skill linking: the image has no agent directories to link into.
+RUN printf '\nskills:\n  dirs: []\n' >> pnpm-workspace.yaml \
+    && pnpm install --frozen-lockfile --ignore-scripts
 COPY . .
 # The browser bundle bakes in the public origin, so it's a build arg.
 ARG VITE_BASE_URL
