@@ -6,7 +6,6 @@ export default {
   schema: "./src/lib/db/schema/index.ts",
   breakpoints: true,
   verbose: true,
-  strict: true,
 
   dialect: "postgresql",
   dbCredentials: {
