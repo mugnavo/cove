@@ -1,0 +1,22 @@
+# Runs the production image next to the base database:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build
+# Runtime env comes from .env; `environment` below overrides it (and wins over env_file),
+# so only list values that must differ in the container. The app refuses to start and lists
+# any required variable that is missing.
+services:
+  app:
+    build:
+      context: .
+      args:
+        VITE_BASE_URL: ${VITE_BASE_URL:-http://localhost:3000}
+    env_file:
+      - path: ./.env
+        required: false
+    ports:
+      - ${HOST_PORT:-3000}:3000
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      # The database is the `db` service here
+      - DATABASE_URL=postgresql://postgres:password@db:5432/cove
