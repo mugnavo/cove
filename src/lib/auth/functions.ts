@@ -2,6 +2,7 @@ import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
 import { getRequest, appendResponseHeader } from "@tanstack/react-start/server";
 
 import { auth } from "#/lib/auth/auth.ts";
+import { useLogger } from "#/lib/logger.server.ts";
 
 /**
  * This server function is meant to be called via authQueryOptions() in queries.ts,
@@ -38,5 +39,10 @@ export const _getUser = createServerOnlyFn(async (query?: GetUserServerQuery) =>
     appendResponseHeader("Set-Cookie", cookies);
   }
 
-  return session.response?.user || null;
+  const user = session.response?.user || null;
+  if (user) {
+    useLogger().set({ user: { id: user.id } });
+  }
+
+  return user;
 });
