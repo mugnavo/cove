@@ -1,5 +1,5 @@
 import { createMiddleware } from "@tanstack/react-start";
-import { setResponseStatus } from "@tanstack/react-start/server";
+import { createError } from "evlog";
 
 import { _getUser } from "#/lib/auth/functions.ts";
 
@@ -17,8 +17,7 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
   const user = await _getUser();
 
   if (!user) {
-    setResponseStatus(401);
-    throw new Error("Unauthorized");
+    throw createError({ message: "Unauthorized", status: 401 });
   }
 
   return next({ context: { user } });
@@ -40,8 +39,7 @@ export const freshAuthMiddleware = createMiddleware().server(async ({ next }) =>
   });
 
   if (!user) {
-    setResponseStatus(401);
-    throw new Error("Unauthorized");
+    throw createError({ message: "Unauthorized", status: 401 });
   }
 
   return next({ context: { user } });
