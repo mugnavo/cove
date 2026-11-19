@@ -53,6 +53,8 @@ export const auth = betterAuth({
   // https://better-auth.com/docs/authentication/email-password
   emailAndPassword: {
     enabled: true,
+    // If you add sendResetPassword, don't email Better Auth's default `url`: it carries the token in
+    // its URL path, which request logs record. Link to your reset page with `?token=` instead.
   },
 
   advanced: {
