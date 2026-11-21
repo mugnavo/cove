@@ -30,6 +30,11 @@ pnpm create cove
 
 #### Setup
 
+> [!TIP]
+> This template includes a [Devcontainer](https://containers.dev/) with all dependencies (Node), tools (Vite+), database already configured.
+>
+> Usage: build the container, run `vp install`, and go to step 2.
+
 1. [Use this template](https://github.com/new?template_name=cove&template_owner=mugnavo) or create a project using our CLI:
 
    ```bash
