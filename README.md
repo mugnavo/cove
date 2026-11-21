@@ -77,6 +77,28 @@ The [vite config](./vite.config.ts) is configured to use Nitro by default, which
 
 Refer to the [TanStack Start hosting docs](https://tanstack.com/start/latest/docs/framework/react/guide/hosting) for more information.
 
+### Docker
+
+The [Dockerfile](./Dockerfile) builds the app and serves it with Node. Env vars are read when the container starts with the exception of `VITE_BASE_URL`, which is baked into the browser bundle and must be passed as a build arg. On start, the container:
+
+- checks every variable in `.env.schema`, and exits listing any that are missing or invalid;
+- applies pending database migrations;
+- starts the server.
+
+The compose stack reads production ENVs from `.env` so make a copy of your `.env.local` to use for this, or provide your own.
+
+To run the image next to the local database, using `.env` for the runtime env (`DATABASE_URL` is overridden to point at the `db` service):
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+```
+
+If you make changes to the codebase and want to build/run a new production image using these updates make sure to build first:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml build app
+```
+
 ## Issue watchlist
 
 - [Devtools releases](https://github.com/TanStack/devtools/releases) - TanStack Devtools is in alpha and may still have breaking changes.
