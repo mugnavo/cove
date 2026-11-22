@@ -1,16 +1,8 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  CopyIcon,
-  ExternalLinkIcon,
-  StarIcon,
-  TerminalIcon,
-} from "lucide-react";
-import { Suspense } from "react";
-import { useState } from "react";
+import { CheckIcon, CopyIcon, ExternalLinkIcon, StarIcon } from "lucide-react";
+import { Suspense, useState } from "react";
 
 import { SignOutButton } from "#/components/sign-out-button.tsx";
 import { ThemeToggle } from "#/components/theme-toggle.tsx";
@@ -18,6 +10,8 @@ import { Button } from "#/components/ui/button.tsx";
 import { toast } from "#/components/ui/toast.tsx";
 import { useAuthSuspense } from "#/lib/auth/hooks.ts";
 
+import { dependencies, devDependencies } from "../../../package.json";
+import workspaceYaml from "../../../pnpm-workspace.yaml?raw";
 import { formatGitHubStars } from "./format-github-stars";
 
 /**
@@ -25,175 +19,57 @@ import { formatGitHubStars } from "./format-github-stars";
  * Happy coding!
  */
 export function IntroPage() {
-  const [isCopied, setIsCopied] = useState(false);
-
-  const repoUrl = "https://github.com/mugnavo/cove";
-  const cloneCommand = "pnpm create cove";
-  const fallbackStarsCount = 1000;
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(cloneCommand);
-      setIsCopied(true);
-      toast.add({ type: "success", description: "Command copied to clipboard." });
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 4000);
-    } catch {
-      toast.add({ type: "error", description: "Failed to copy command." });
-    }
-  };
-
   return (
-    <div className="min-h-screen overflow-hidden">
-      <div className="mx-auto max-w-4xl px-4 pt-14 pb-12 sm:px-6 md:pt-22">
-        <header className="flex items-center justify-between">
-          <a href={repoUrl} className="flex items-center gap-2 hover:underline">
-            <img
-              src="https://mugnavo.com/favicon-32x32.png"
-              alt="Mugnavo logo"
-              className="size-5"
-            />
-            <span className="text-lg font-semibold tracking-tight text-foreground">cove</span>
+    <div className="min-h-svh bg-background text-foreground [--gold-ink:oklch(0.52_0.1_80)] [--gold:oklch(0.8_0.12_88)] selection:bg-(--gold) selection:text-black dark:[--gold-ink:#ebd27a] dark:[--gold:#ebd27a]">
+      <style>{":root { --radius: 0rem; }"}</style>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 bg-[linear-gradient(to_right,var(--color-foreground)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-foreground)_1px,transparent_1px)] mask-[linear-gradient(to_bottom,black,transparent_70%)] bg-size-[3rem_3rem] opacity-[0.035]"
+      />
+
+      <div className="relative mx-auto max-w-6xl px-6 sm:px-10">
+        <header className="flex h-20 items-center justify-between">
+          <a href={REPO_URL} className="flex items-center gap-2.5">
+            <img src="https://mugnavo.com/favicon-32x32.png" alt="" className="size-4" />
+            <span className="text-lg font-semibold tracking-[-0.03em]">cove</span>
           </a>
-          <div className="flex items-center gap-2">
-            <RepoStarsBadge href={repoUrl} fallbackStarsCount={fallbackStarsCount} />
+          <div className="flex items-center gap-3">
+            <HeaderStars />
             <ThemeToggle />
           </div>
         </header>
 
-        <main>
-          <section className="relative isolate mt-6 mb-24 overflow-hidden rounded-[2rem] border border-border bg-card px-6 py-14 shadow-[0_32px_100px_-64px_rgba(0,0,0,0.55)] sm:px-10 md:mt-8 md:px-14 md:py-20">
-            <div
-              aria-hidden="true"
-              className="absolute top-10 right-10 size-2 rounded-full bg-yellow-400 shadow-[0_0_32px_12px_rgba(250,204,21,0.2)] dark:bg-yellow-200"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -right-72 -bottom-88 size-192 rotate-[-8deg] rounded-[43%_57%_66%_34%/58%_39%_61%_42%] border border-sky-950/10 bg-sky-950/2.5 dark:border-sky-100/10 dark:bg-sky-100/2.5"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -right-60 -bottom-80 size-168 rotate-[-13deg] rounded-[51%_49%_39%_61%/44%_62%_38%_56%] border border-sky-950/10 dark:border-sky-100/10"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -right-44 -bottom-68 size-140 rotate-[-18deg] rounded-[38%_62%_55%_45%/63%_42%_58%_37%] border border-yellow-500/20 dark:border-yellow-200/15"
-            />
-
-            <div className="relative max-w-2xl">
-              <a
-                href="https://github.com/mugnavo/cove/issues/96"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-yellow-500/15 md:text-sm dark:border-yellow-200/20 dark:bg-yellow-200/10 dark:hover:bg-yellow-200/15"
-              >
-                TanStarter is now Cove Stack.
-                <ExternalLinkIcon aria-hidden="true" className="size-3 md:size-3.5" />
-              </a>
-              <h1 className="max-w-xl text-3xl font-bold tracking-[-0.04em] text-balance sm:text-4xl md:text-5xl md:leading-[1.05]">
-                A <span className="text-yellow-500 dark:text-yellow-200">minimal</span> starter
-                stack for TanStack Start.
-              </h1>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                The Cove Stack brings together the essentials for building type-safe web
-                applications without the extra boilerplate.
-              </p>
-
-              <div className="mt-9 max-w-xl rounded-xl border border-border/80 bg-background/80 p-1 shadow-lg backdrop-blur-sm">
-                <div className="group flex items-center justify-between rounded-lg border border-border bg-card/90 p-4">
-                  <div className="flex items-center gap-3 overflow-hidden">
-                    <TerminalIcon className="hidden size-4 shrink-0 text-muted-foreground/70 sm:inline" />
-                    <code className="overflow-hidden font-mono text-sm text-ellipsis whitespace-nowrap md:text-base">
-                      <span className="mr-2 hidden text-muted-foreground/70 select-none sm:inline">
-                        $
-                      </span>
-                      <span className="select-all">{cloneCommand}</span>
-                    </code>
-                  </div>
-                  <button
-                    onClick={copyToClipboard}
-                    className="ml-4 shrink-0 rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                    title="Copy command"
-                    aria-label="Copy command"
-                  >
-                    {isCopied ? <CheckIcon className="size-5" /> : <CopyIcon className="size-5" />}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mb-20">
-            <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              A <span className="text-yellow-500 dark:text-yellow-200">calm</span> foundation to
-              build on.
-            </h2>
-            <div className="grid grid-cols-1 gap-x-12 gap-y-8 rounded-2xl border border-border bg-card/50 p-6 sm:p-8 md:grid-cols-2">
-              <Feature
-                title="Full-Stack Core"
-                desc="Build on a modern full-stack framework with TanStack Start, Router, and Vite."
-              />
-              <Feature
-                title="Only the Essentials"
-                desc="Drizzle ORM, Better Auth, shadcn/ui. Less boilerplate that you'll end up deleting anyway."
-              />
-              <Feature
-                title="End-to-end Type Safety"
-                desc="Effortless type safety powered by TanStack Router and Start server functions."
-              />
-              <Feature
-                title="Next-Gen Tooling"
-                desc="Build with Vite+, log with evlog, and manage environment variables with Varlock."
-              />
-            </div>
-          </section>
-
-          <Suspense fallback={<div className="mb-20 py-6">Loading session...</div>}>
-            <UserAction />
+        <main className="border-x border-foreground/10">
+          <Hero />
+          <Features />
+          <Suspense fallback={<div className="border-t border-foreground/10 p-10" />}>
+            <Session />
           </Suspense>
-
-          <section className="mb-20">
-            <div className="space-y-2">
-              {TECH_BADGE_ROWS.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex flex-wrap items-center justify-center gap-2">
-                  {row.map((badge) => (
-                    <a
-                      key={badge.alt}
-                      href={badge.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition-opacity hover:opacity-80"
-                    >
-                      <img alt={badge.alt} src={badge.src} />
-                    </a>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <TemplateSetupGuide />
+          <Cleanup />
+          <Closing />
         </main>
 
-        <footer className="flex flex-col items-center justify-between gap-6 pt-8 text-sm md:flex-row">
+        <footer className="flex flex-col gap-4 border-t border-foreground/10 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <span>
+            Built and maintained by{" "}
+            <a
+              href="https://mugnavo.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-(--gold)"
+            >
+              Mugnavo
+            </a>
+          </span>
           <a
-            href={repoUrl}
+            href={REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="flex items-center gap-2 transition-colors hover:text-foreground"
           >
             <SiGithub className="size-4" />
-            GitHub
-          </a>
-          <a
-            href="https://mugnavo.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 underline decoration-border transition-all hover:decoration-foreground"
-          >
-            Mugnavo
-            <ExternalLinkIcon className="size-4" />
+            mugnavo/cove
           </a>
         </footer>
       </div>
@@ -201,131 +77,85 @@ export function IntroPage() {
   );
 }
 
-function Feature({ title, desc }: { title: string; desc: string }) {
+const REPO_URL = "https://github.com/mugnavo/cove";
+const CREATE_COMMAND = "pnpm create cove";
+
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <h3 className="mb-2 font-semibold text-foreground">{title}</h3>
-      <p className="text-sm leading-relaxed text-muted-foreground">{desc}</p>
+    <p className="font-mono text-xs tracking-[0.16em] text-muted-foreground uppercase">
+      {children}
+    </p>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="grid border-t border-foreground/10 lg:grid-cols-[1.15fr_1fr]">
+      <div className="flex flex-col justify-between gap-14 p-6 py-14 sm:p-10 md:py-16">
+        <div>
+          <a
+            href="https://github.com/mugnavo/cove/issues/96"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-8 flex w-fit items-center gap-2.5 border border-(--gold)/40 bg-(--gold)/10 px-3 py-1.5 text-sm transition-colors hover:border-(--gold) hover:bg-(--gold)/15"
+          >
+            <span aria-hidden="true" className="size-1.5 bg-(--gold)" />
+            TanStarter is now Cove Stack.
+            <ExternalLinkIcon aria-hidden="true" className="size-3.5 text-muted-foreground" />
+          </a>
+          <h1 className="max-w-[13ch] text-[clamp(2.5rem,5vw,4.5rem)] leading-none font-light tracking-[-0.055em]">
+            A minimal starter stack for TanStack Start.
+          </h1>
+          <p className="mt-7 max-w-[42ch] text-lg leading-relaxed text-muted-foreground">
+            The Cove Stack brings together the essentials for building type-safe web applications
+            without the extra boilerplate.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <CommandCopy />
+          <GitHubLink />
+        </div>
+      </div>
+
+      <SpecSheet />
+    </section>
+  );
+}
+
+function CommandCopy() {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(CREATE_COMMAND);
+      setIsCopied(true);
+      toast.add({ type: "success", description: "Command copied to clipboard." });
+      setTimeout(() => setIsCopied(false), 4000);
+    } catch {
+      toast.add({ type: "error", description: "Failed to copy command." });
+    }
+  };
+
+  return (
+    <div className="flex h-12 w-fit items-center gap-4 bg-(--gold) pr-1.5 pl-4 font-mono text-sm text-black selection:bg-black! selection:text-(--gold)!">
+      <span>
+        <span className="mr-3 opacity-45 select-none">$</span>
+        <span className="select-all">{CREATE_COMMAND}</span>
+      </span>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label="Copy command"
+        title="Copy command"
+        className="grid size-9 place-items-center transition-colors hover:bg-black/10"
+      >
+        {isCopied ? <CheckIcon className="size-4" /> : <CopyIcon className="size-4" />}
+      </button>
     </div>
   );
 }
 
-function UserAction() {
-  const { user } = useAuthSuspense();
-
-  return user ? (
-    <section className="mb-20 flex flex-col items-center space-y-1.5">
-      <div className="mb-4 flex w-full items-center gap-2">
-        <div className="size-2 animate-pulse rounded-full bg-primary"></div>
-        <h2 className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
-          Session
-        </h2>
-      </div>
-      <div className="w-full">
-        <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-          <div className="flex items-center justify-between border-b border-border bg-muted px-4 py-2.5">
-            <div className="flex items-center gap-1.5">
-              <div className="size-2.5 rounded-full bg-border"></div>
-              <div className="size-2.5 rounded-full bg-border"></div>
-              <div className="size-2.5 rounded-full bg-border"></div>
-              <span className="ml-2 font-mono text-[10px] text-muted-foreground">
-                useAuthSuspense() data
-              </span>
-            </div>
-            <span className="font-mono text-[10px] text-muted-foreground/70 uppercase">
-              ReadOnly
-            </span>
-          </div>
-          <div className="overflow-x-auto p-6">
-            <pre className="font-mono text-xs leading-relaxed text-foreground/80">
-              {JSON.stringify(user, null, 2)}
-            </pre>
-          </div>
-        </div>
-        <div className="-mt-px mr-4 ml-auto flex w-fit flex-wrap items-center justify-end gap-2 rounded-b-xl border border-t-0 border-border bg-muted/30 px-4 py-3 shadow-sm md:mr-8">
-          <Button render={<Link to="/app" />} className="w-fit" size="lg" nativeButton={false}>
-            Go to /app
-          </Button>
-          <SignOutButton />
-        </div>
-      </div>
-    </section>
-  ) : (
-    <section className="mb-20">
-      <div className="mb-4 flex w-full items-center gap-2">
-        <div className="size-2 rounded-full bg-muted-foreground/40"></div>
-        <h2 className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
-          Session
-        </h2>
-      </div>
-      <div className="flex flex-col items-center rounded-2xl border border-border bg-card/50 px-6 py-8 text-center sm:px-10">
-        <h3 className="text-lg font-semibold text-foreground">You are not signed in.</h3>
-        <p className="mt-2 max-w-90 text-sm leading-relaxed text-muted-foreground">
-          Nothing fancy. Just a quick demo of protected routes and the auth utilities in action.
-        </p>
-        <Button render={<Link to="/login" />} className="mt-6 w-fit" size="lg" nativeButton={false}>
-          Log in
-        </Button>
-      </div>
-    </section>
-  );
-}
-
-function TemplateSetupGuide() {
-  return (
-    <details className="group mx-auto mb-16 max-w-[65ch] overflow-hidden rounded-xl border border-border bg-card/50 text-sm text-foreground/80">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-4 select-none [&::-webkit-details-marker]:hidden">
-        <span>
-          <span className="block font-medium text-foreground">
-            Just created a project from this stack?
-          </span>
-          <span className="mt-1 block text-muted-foreground">
-            Expand for the starter cleanup checklist.
-          </span>
-        </span>
-        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
-      </summary>
-
-      <div className="border-t border-border px-4 py-4">
-        <ol className="list-decimal space-y-3 pl-5">
-          <li>
-            Delete{" "}
-            <code className="rounded-md border border-border bg-card px-1 py-0.5">
-              src/components/_DELETE_ME_intro-page/
-            </code>
-            , which contains this page, its helper, and the example unit test.
-          </li>
-          <li>
-            Delete{" "}
-            <code className="rounded-md border border-border bg-card px-1 py-0.5">
-              e2e/_DELETE_ME_example-tests/
-            </code>
-            . The Playwright config needs no change.
-          </li>
-          <li>
-            Replace the starter homepage in{" "}
-            <code className="rounded-md border border-border bg-card px-1 py-0.5">
-              src/routes/index.tsx
-            </code>
-            .
-          </li>
-        </ol>
-        <p className="mt-4 text-muted-foreground">
-          The testing setup is intentionally lightweight. For short-lived prototypes, it can be
-          safely ignored or removed.
-        </p>
-      </div>
-    </details>
-  );
-}
-
-function RepoStarsBadge({
-  href,
-  fallbackStarsCount,
-}: {
-  href: string;
-  fallbackStarsCount: number;
-}) {
+function useRepoStars() {
   const { data } = useQuery({
     queryKey: ["github-repo-stars"],
     queryFn: ({ signal }) => fetchRepoStars({ signal }),
@@ -334,43 +164,65 @@ function RepoStarsBadge({
     enabled: typeof window !== "undefined",
   });
 
-  const count = data || fallbackStarsCount;
-  const formattedStarsCount = formatGitHubStars(count);
-  const starsLabel = `${count.toLocaleString()}${data ? "" : "+"} stars on GitHub`;
+  const count = data ?? 1000;
+  const suffix = data ? "" : "+";
+  return {
+    short: `${formatGitHubStars(count)}${suffix}`,
+    label: `${count.toLocaleString()}${suffix} stars on GitHub`,
+  };
+}
+
+function HeaderStars() {
+  const stars = useRepoStars();
 
   return (
-    <Button
-      render={
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={starsLabel}
-          title={starsLabel}
-        />
-      }
-      nativeButton={false}
-      variant="secondary"
-      className="tracking-wide"
+    <a
+      href={REPO_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={stars.label}
+      title={stars.label}
+      className="flex h-8 items-center gap-2 border border-foreground/15 px-3 text-muted-foreground transition-colors hover:border-(--gold) hover:text-foreground"
     >
-      <SiGithub className="size-4" />
-      {formattedStarsCount}
-      {data ? "" : "+"}
-      <StarIcon
-        fill="currentColor"
-        strokeWidth={0}
-        className="size-4 text-yellow-500 dark:text-yellow-300"
-      />
-    </Button>
+      <SiGithub className="size-3.5" />
+      <span className="font-mono text-xs">{stars.short}</span>
+    </a>
+  );
+}
+
+function GitHubLink() {
+  const stars = useRepoStars();
+
+  return (
+    <a
+      href={REPO_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={stars.label}
+      className="group flex h-12 w-fit items-stretch border border-foreground/20 text-sm transition-colors hover:border-(--gold)"
+    >
+      <span className="flex items-center gap-2 px-3.5">
+        <SiGithub className="size-4" />
+        View on GitHub
+      </span>
+      <span className="flex items-center gap-1.5 border-l border-foreground/20 px-3.5 font-mono transition-colors group-hover:border-(--gold)">
+        <StarIcon
+          aria-hidden="true"
+          fill="currentColor"
+          strokeWidth={0}
+          className="size-3.5 text-(--gold)"
+        />
+        <span className="sr-only">GitHub stars:</span>
+        {stars.short}
+      </span>
+    </a>
   );
 }
 
 async function fetchRepoStars({ signal }: { signal: AbortSignal | undefined }) {
   const response = await fetch("https://api.github.com/repos/mugnavo/cove", {
     signal,
-    headers: {
-      Accept: "application/vnd.github+json",
-    },
+    headers: { Accept: "application/vnd.github+json" },
   });
 
   if (!response.ok) {
@@ -391,72 +243,232 @@ async function fetchRepoStars({ signal }: { signal: AbortSignal | undefined }) {
   return data.stargazers_count;
 }
 
-interface TechBadge {
-  alt: string;
-  href: string;
-  src: string;
+const STACK = [
+  {
+    name: "TanStack Start",
+    role: "Framework",
+    href: "https://tanstack.com/start",
+    pkg: "@tanstack/react-start",
+  },
+  {
+    name: "TanStack Query",
+    role: "Data",
+    href: "https://tanstack.com/query",
+    pkg: "@tanstack/react-query",
+  },
+  { name: "React", role: "UI", href: "https://react.dev", pkg: "react" },
+  { name: "Tailwind CSS", role: "Styling", href: "https://tailwindcss.com", pkg: "tailwindcss" },
+  { name: "shadcn/ui", role: "Components", href: "https://ui.shadcn.com", pkg: "shadcn" },
+  { name: "Base UI", role: "Primitives", href: "https://base-ui.com", pkg: "@base-ui/react" },
+  { name: "Drizzle ORM", role: "Database", href: "https://orm.drizzle.team", pkg: "drizzle-orm" },
+  { name: "Better Auth", role: "Auth", href: "https://better-auth.com", pkg: "better-auth" },
+  { name: "Vite+", role: "Toolchain", href: "https://viteplus.dev", pkg: "vite-plus" },
+  { name: "Nitro", role: "Server", href: "https://nitro.build", pkg: "nitro" },
+];
+
+const PACKAGE_VERSIONS: Record<string, string> = { ...dependencies, ...devDependencies };
+
+// Only pnpm's flat `catalog:` block is supported, which is all this template uses
+const CATALOG_VERSIONS: Record<string, string> = Object.fromEntries(
+  (workspaceYaml.match(/^catalog:\r?\n((?:(?:[ \t]+.*)?\r?\n)*)/m)?.[1] ?? "")
+    .split("\n")
+    .flatMap((line) => {
+      const match = line.match(/^\s+["']?([^"'\s]+?)["']?:\s*["']?([^"'\s#]+)/);
+      return match ? [[match[1], match[2]]] : [];
+    }),
+);
+
+function getVersion(pkg: string) {
+  const version = PACKAGE_VERSIONS[pkg];
+  return version?.startsWith("catalog:") ? CATALOG_VERSIONS[pkg] : version;
 }
 
-const CORE_BADGES: TechBadge[] = [
+function SpecSheet() {
+  return (
+    <div className="relative border-t border-foreground/10 p-6 py-14 sm:p-10 md:py-16 lg:border-t-0 lg:border-l">
+      <span aria-hidden="true" className="absolute -top-px left-0 h-3 w-px bg-(--gold) lg:hidden" />
+      <div className="flex items-center justify-between gap-6">
+        <Label>Spec</Label>
+        <span className="font-mono text-xs text-muted-foreground">package.json</span>
+      </div>
+      <ul className="mt-10">
+        {STACK.map((item) => (
+          <li key={item.name}>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group grid h-9 items-center gap-4 sm:grid-cols-[6.5rem_1fr]"
+            >
+              <span className="text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase max-sm:hidden">
+                {item.role}
+              </span>
+              <span className="flex items-center gap-3">
+                <span className="text-[0.9375rem] whitespace-nowrap transition-colors group-hover:text-(--gold-ink)">
+                  {item.name}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="h-px flex-1 bg-foreground/10 transition-colors group-hover:bg-(--gold)"
+                />
+                <span className="font-mono text-xs whitespace-nowrap text-muted-foreground">
+                  {getVersion(item.pkg)}
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const FEATURES = [
   {
-    alt: "React version",
-    href: "https://react.dev",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies.react&label=react&style=flat-square",
+    title: "Full-Stack Core",
+    desc: "Build on a modern full-stack framework with TanStack Start, Router, and Vite.",
   },
   {
-    alt: "TanStack Start version",
-    href: "https://tanstack.com/start/latest",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-start%22%5D&label=tanstack-start&style=flat-square",
+    title: "Only the Essentials",
+    desc: "Drizzle ORM, Better Auth, shadcn/ui. Less boilerplate that you'll end up deleting anyway.",
   },
   {
-    alt: "TanStack Query version",
-    href: "https://tanstack.com/query/latest",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40tanstack%2Freact-query%22%5D&label=tanstack-query&style=flat-square",
+    title: "End-to-end Type Safety",
+    desc: "Effortless type safety powered by TanStack Router and Start server functions.",
+  },
+  {
+    title: "Next-Gen Tooling",
+    desc: "Build with Vite+, log with evlog, and manage environment variables with Varlock.",
   },
 ];
 
-const UI_BADGES: TechBadge[] = [
+function Features() {
+  return (
+    <section className="grid gap-px border-t border-foreground/10 bg-foreground/10 sm:grid-cols-2 lg:grid-cols-4">
+      {FEATURES.map((feature, index) => (
+        <div key={feature.title} className="relative bg-background p-6 pt-8 pb-12 sm:p-8 sm:pb-14">
+          <span aria-hidden="true" className="absolute -top-px left-0 h-3 w-px bg-(--gold)" />
+          <span className="font-mono text-xs text-muted-foreground">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="mt-8 text-lg font-medium tracking-[-0.02em]">{feature.title}</h3>
+          <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">
+            {feature.desc}
+          </p>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function Session() {
+  const { user } = useAuthSuspense();
+
+  return (
+    <section className="grid grid-cols-1 border-t border-foreground/10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="flex flex-col gap-6 p-6 py-12 sm:p-10">
+        <Label>Session</Label>
+        <h2 className="text-2xl font-light tracking-[-0.04em] wrap-break-word md:text-3xl">
+          {user ? `Signed in as ${user.name || user.email}.` : "You are not signed in."}
+        </h2>
+        <p className="max-w-[44ch] leading-relaxed text-muted-foreground">
+          Nothing fancy. Just a quick demo of protected routes and the auth utilities in action.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          {user ? (
+            <>
+              <Button render={<Link to="/app" />} nativeButton={false} size="lg">
+                Go to /app
+              </Button>
+              <SignOutButton />
+            </>
+          ) : (
+            <Button render={<Link to="/login" />} nativeButton={false} size="lg">
+              Log in
+            </Button>
+          )}
+        </div>
+      </div>
+      <div className="border-t border-foreground/10 lg:border-t-0 lg:border-l">
+        <div className="flex items-center justify-between border-b border-foreground/10 px-6 py-3 font-mono text-xs text-muted-foreground sm:px-10">
+          <span>useAuthSuspense()</span>
+          <span className="tracking-[0.16em] uppercase">Read-only</span>
+        </div>
+        <pre className="max-h-80 overflow-auto p-6 font-mono text-xs leading-relaxed text-foreground/80 sm:px-10">
+          {JSON.stringify(user ?? null, null, 2)}
+        </pre>
+      </div>
+    </section>
+  );
+}
+
+const CLEANUP_STEPS = [
   {
-    alt: "Tailwind CSS version",
-    href: "https://tailwindcss.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.devDependencies.tailwindcss&label=tailwindcss&style=flat-square",
+    path: "src/components/_DELETE_ME_intro-page/",
+    note: "Delete it. It holds this page, its helpers, and the example unit test.",
   },
   {
-    alt: "shadcn/ui version",
-    href: "https://ui.shadcn.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies.shadcn&label=shadcn%2Fui&style=flat-square",
+    path: "e2e/_DELETE_ME_example-tests/",
+    note: "Delete it. The Playwright config needs no change.",
   },
   {
-    alt: "Base UI version",
-    href: "https://base-ui.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40base-ui%2Freact%22%5D&label=base-ui&style=flat-square",
+    path: "src/routes/index.tsx",
+    note: "Replace the starter homepage with your own.",
   },
 ];
 
-const DATA_BADGES: TechBadge[] = [
-  {
-    alt: "Drizzle ORM version",
-    href: "https://orm.drizzle.team/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22drizzle-orm%22%5D&label=drizzle-orm&style=flat-square",
-  },
-  {
-    alt: "Better Auth version",
-    href: "https://better-auth.com/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22better-auth%22%5D&label=better-auth&style=flat-square",
-  },
-];
+function Cleanup() {
+  return (
+    <section className="border-t border-foreground/10 bg-[repeating-linear-gradient(-45deg,color-mix(in_oklab,var(--color-foreground)_7%,transparent)_0_1px,transparent_1px_8px)] p-3 sm:p-6">
+      <div className="grid border border-dashed border-foreground/30 bg-background lg:grid-cols-[1fr_1.15fr]">
+        <div className="flex flex-col gap-6 p-6 sm:p-10">
+          <p className="flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] text-(--gold-ink) uppercase">
+            <span aria-hidden="true" className="size-1.5 bg-(--gold)" />
+            Getting started
+          </p>
+          <h2 className="text-2xl font-light tracking-[-0.04em] md:text-3xl">
+            Just created a project from this stack?
+          </h2>
+          <p className="max-w-[44ch] leading-relaxed text-muted-foreground">
+            This page and its demo ship with the starter. Clear them out when you're ready to build
+            your own.
+          </p>
+          <p className="max-w-[44ch] text-sm leading-relaxed text-muted-foreground lg:mt-auto lg:pt-6">
+            The testing setup is intentionally lightweight. For short-lived prototypes, it can be
+            safely ignored or removed.
+          </p>
+        </div>
+        <ol className="border-t border-dashed border-foreground/30 lg:border-t-0 lg:border-l">
+          {CLEANUP_STEPS.map((step, index) => (
+            <li
+              key={step.path}
+              className="border-dashed border-foreground/30 p-6 not-first:border-t sm:px-10 sm:py-8"
+            >
+              <span className="font-mono text-xs text-muted-foreground">Step {index + 1}</span>
+              <code className="mt-4 block font-mono text-sm wrap-anywhere text-(--gold-ink)">
+                {step.path}
+              </code>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                {step.note}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
 
-const PLATFORM_BADGES: TechBadge[] = [
-  {
-    alt: "Vite+ version",
-    href: "https://viteplus.dev",
-    src: "https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpnpm-workspace.yaml&query=%24.catalog.vite-plus&label=vite-plus&style=flat-square",
-  },
-  {
-    alt: "Nitro version",
-    href: "https://nitro.build/",
-    src: "https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmugnavo%2Fcove%2Fmain%2Fpackage.json&query=%24.devDependencies.nitro&label=nitro&style=flat-square",
-  },
-];
-
-const TECH_BADGE_ROWS = [CORE_BADGES, UI_BADGES, DATA_BADGES, PLATFORM_BADGES];
+function Closing() {
+  return (
+    <section className="grid gap-10 border-t border-foreground/10 p-6 py-20 sm:p-10 md:py-28 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
+      <p className="max-w-[12ch] text-[clamp(2.25rem,5vw,4.5rem)] leading-none font-light tracking-[-0.055em]">
+        Clone it. Delete what you don't need.
+      </p>
+      <div className="flex flex-col gap-3">
+        <CommandCopy />
+        <GitHubLink />
+      </div>
+    </section>
+  );
+}

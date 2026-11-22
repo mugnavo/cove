@@ -16,10 +16,12 @@ test("a logged-out visitor can reach the login form", async ({ page }) => {
     }),
   ).toBeVisible();
   await expect(page.getByRole("heading", { name: "Full-Stack Core" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Copy command" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Copy command" }).first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "You are not signed in." })).toBeVisible();
 
-  await page.getByText("Just created a project from this stack?").click();
+  await expect(
+    page.getByRole("heading", { name: "Just created a project from this stack?" }),
+  ).toBeVisible();
   await expect(page.getByText(/The Playwright config needs no change/)).toBeVisible();
 
   await page.getByRole("button", { name: "Log in" }).click();
